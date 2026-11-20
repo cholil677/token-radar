@@ -1,0 +1,99 @@
+/* Token Radar — dark radar console. No network, no framework. */
+:root {
+  --bg: #0a1120;
+  --panel: #101a2e;
+  --panel2: #0d1526;
+  --line: #22304d;
+  --text: #e7eefb;
+  --muted: #93a4c0;
+  --faint: #64748f;
+  --accent: #34d399;
+  --accent-dim: #1d5c44;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.shell { max-width: 1180px; margin: 0 auto; padding: 20px 18px 48px; }
+h1 { font-size: 26px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.01em; }
+h2 { font-size: 17px; margin: 0 0 8px; }
+h3 { font-size: 15px; margin: 0 0 6px; }
+p { margin: 0 0 10px; }
+.sub { color: var(--muted); font-size: 13px; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pos { color: var(--accent); }
+.neg { color: var(--red); }
+
+.top { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between; padding: 6px 0 14px; border-bottom: 1px solid var(--line); }
+.brand { font-size: 20px; font-weight: 800; letter-spacing: 0.06em; }
+.brand i { display: inline-block; width: 11px; height: 11px; margin-right: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-dim); }
+.top-meta { display: flex; gap: 14px; flex-wrap: wrap; color: var(--muted); font-size: 13px; }
+
+.lede { padding: 18px 0 4px; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0 4px; }
+.fact { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.fact span { display: block; color: var(--muted); font-size: 12px; }
+.fact b { font-size: 19px; font-family: var(--mono); font-weight: 700; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 14px 0; }
+.formula { font-family: var(--mono); font-size: 13px; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 14px 0; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label, .field .lab { color: var(--muted); font-size: 12px; }
+.field input[type="search"], .field select { background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 14px; }
+.field input[type="search"] { width: 250px; }
+.checks { display: flex; gap: 14px; align-items: center; padding-bottom: 8px; font-size: 13px; }
+.checks label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+.tabs { display: flex; gap: 6px; }
+.tabs button { background: var(--panel2); color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--accent-dim); color: var(--text); border-color: var(--accent); }
+.count { margin-left: auto; color: var(--muted); font-size: 13px; padding-bottom: 8px; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+caption { text-align: left; padding-bottom: 8px; }
+th, td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+th.num, td.num { text-align: right; }
+th button { background: none; border: 0; color: var(--muted); font: inherit; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; padding: 0; }
+th button:hover { color: var(--text); }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: #16223c; }
+tbody tr[data-selected="true"] { background: #16283f; outline: 1px solid var(--accent-dim); }
+.name b { display: block; font-size: 14px; }
+.bar { height: 5px; background: var(--line); border-radius: 3px; margin-bottom: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); }
+.tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; border-radius: 4px; padding: 2px 6px; margin-left: 6px; vertical-align: 1px; }
+.tag-watch { background: var(--accent-dim); color: var(--accent); }
+.tag-ext { background: #3d2f10; color: var(--amber); }
+.empty { text-align: center; padding: 30px 10px; }
+.button { background: var(--accent-dim); color: var(--text); border: 1px solid var(--accent); border-radius: 8px; padding: 8px 14px; font: inherit; cursor: pointer; }
+
+.detail { border-color: var(--accent-dim); }
+.detail-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.detail-head h2 { font-size: 22px; margin: 2px 0 4px; }
+.close { background: var(--panel2); color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font: inherit; cursor: pointer; }
+.equation { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0; }
+.equation div { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.equation span { display: block; color: var(--muted); font-size: 12px; }
+.equation b { font-size: 15px; }
+.steps { margin: 6px 0 0; padding-left: 20px; }
+.steps li { margin-bottom: 9px; }
+.steps .cost { display: block; color: var(--muted); font-size: 13px; }
+.note { background: var(--panel2); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 13px; color: var(--muted); }
+
+.sandbox { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 10px; }
+.sandbox label { display: block; color: var(--muted); font-size: 12px; margin-bottom: 4px; }
+.sandbox output { font-family: var(--mono); color: var(--text); }
+.sandbox input[type="range"] { width: 100%; accent-color: var(--accent); }
+.foot { color: var(--faint); font-size: 12px; padding: 8px 2px; }
+@media (max-width: 760px) {
+  .facts, .equation, .sandbox { grid-template-columns: 1fr 1fr; }
+  .field input[type="search"] { width: 100%; }
+}
